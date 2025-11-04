@@ -28,16 +28,12 @@ bot.on("message", async function (msg) {
 Привод: Полный.`,
 reply_markup: {
     inline_keyboard: [
-        [{text: "info" , callback_data: "info"}  ],
+        [{text: "info" , callback_data: "info"} ,{ text: "Rasmlar", callback_data: "photos" }, ],
+        [{ text: "Narxi", callback_data: "price" }]
           
     ],
 },
-reply_markup: {
-    keyboard: [
-     [{text: "orqaga"}]
-    ], 
-    resize_keyboard:true,
-}
+
     })
 
   } else if (text == "Menu 😜") {
@@ -49,7 +45,7 @@ reply_markup: {
         caption: "Bizning menyuyimiz...",
         reply_markup: {
           keyboard: [
-            [{ text: "Manti" }, { text: "Karam" }],
+            [{ text: "Manti" }, { text: "Qora" }],
             [{ text: "Shashlik" }, { text: "Hotdog" }],
             [{text: "orqaga"}],
           ],
@@ -73,6 +69,25 @@ reply_markup: {
 
 
 });
+bot.on("callback_query", function (query) {
+    console.log(query);
+    const data = query.data;
+    const chatId = query.message.chat.id;
+
+    if (data === "info ") {
+        bot.sendMessage(chatId, "bu yerda mashina haqida ma'lumot olishingiz mumkin")
+    }
+     else if (data == "photos") {
+    bot.sendPhoto(chatId, "./assets/images/lambo.jpg");
+  } else if (data == "price") {
+    bot.sendMessage(chatId, "175,000 dollar", {
+      reply_markup: {
+        inline_keyboard: [[{ text: "Sotib olish", callback_data: "buy" }]],
+      },
+    });
+  } else if (data == "buy") {
+    bot.sendMessage(chatId, "Pullarni Soliyajonga bering... Mashina unda");
+}  })
 
 console.log("Bot ishga tushdi...");
 
